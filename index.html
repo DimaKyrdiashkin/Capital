@@ -2964,19 +2964,27 @@
 		});
 		$(".menu_button").click(function(){
 			if ($(".menu_button").hasClass("close_button")) {
-				$(".bg_middel, .bg_top, .bg_bottom").toggleClass("bg_opan");
 				$(".button_top").removeClass("button_top__close");
 				$(".button_bottom").css("opacity", 1);
 				$(".menu_button").removeClass("close_button");
+				$(".menu").css("opacity", 0);
 				setTimeout(function() {
-  					$(".menu_back__layer").removeClass("menu_back__layer");	
+					$(".bg_middel, .bg_top, .bg_bottom").toggleClass("bg_opan");	
 				}, 1000);
+				setTimeout(function() {
+  					$(".menu_back__layer").removeClass("menu_back__layer");
+  					$(".menu").css("z-index", -5);	
+				}, 2000);
 			}else{
 				$(".bg_middel, .bg_top, .bg_bottom").toggleClass("bg_opan");
 				$(".menu_back").addClass("menu_back__layer");
 				$(".menu_button").addClass("close_button");
 				$(".button_top").addClass("button_top__close");
 				$(".button_bottom").css("opacity", 0);
+				$(".menu").css("z-index", 11);
+				setTimeout(function() {
+  					$(".menu").css("opacity", 1);	
+				}, 1000);
 			};
 		});
 		$(".arrow_calendar__left").click(function(event){
@@ -2986,8 +2994,7 @@
 			$(event.target).parents(".month").removeClass("month_middle");
 			$(event.target).parents(".month").addClass("month_right");
 			$(".month").removeClass("open_calendar");
-			// $(event.target).siblings(".week, .day, .eventDesc").toggleClass("opacity_calendar");
-			// $(event.target).parents(".month_head").siblings(".week, .day, .eventDesc").toggleClass("opacity_calendar");
+			$(".week, .day, .eventDesc").removeClass("opacity_calendar");
 		});
 		$(".arrow_calendar__right").click(function(event){
 			let a = $(event.target).parents(".month").attr('class');
@@ -2996,13 +3003,14 @@
 			$(event.target).parents(".month").removeClass("month_middle");
 			$(event.target).parents(".month").addClass("month_left");
 			$(".month").removeClass("open_calendar");
-			// $(event.target).siblings(".week, .day, .eventDesc").toggleClass("opacity_calendar");
-			// $(event.target).parents(".month_head").siblings(".week, .day, .eventDesc").toggleClass("opacity_calendar");
+			$(".week, .day, .eventDesc").removeClass("opacity_calendar");
 		});
 		$(window).resize(function(){
 			wid = document.documentElement.scrollWidth;
-			if(wid <= 751){
-
+			if(wid <= 975 && $(".month_middle>.week").hasClass("opacity_calendar")){
+				$(".calendar").addClass("calendar_open");
+			}else{
+				$(".calendar").removeClass("calendar_open");
 			};
 		});
 	</script>
